@@ -71,15 +71,14 @@ func (f *fcomplexity) process(x ast.Node) {
 		switch n.(type) {
 		case *ast.BranchStmt:
 			f.complexity++
-		case *ast.CaseClause:
-			f.complexity++
-		case *ast.CommClause:
-			f.complexity++
-		case *ast.DeferStmt:
+		case *ast.SwitchStmt:
 			f.complexity++
 		case *ast.ForStmt:
 			f.complexity++
 		case *ast.IfStmt:
+			f.complexity++
+		case *ast.ReturnStmt:
+			// how to only count this if it's not at the end of the function?
 			f.complexity++
 		}
 		return true
@@ -102,8 +101,7 @@ func processFile(filename string, in io.Reader,
 		return err
 	}
 
-	// Create the AST by parsing src.
-	fset := token.NewFileSet() // positions are relative to fset
+	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, src, 0)
 	if err != nil {
 		panic(err)
