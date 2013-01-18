@@ -4,18 +4,19 @@ import (
 	"flag"
 	"fmt"
 	"go/ast"
-	"go/scanner"
 	"go/parser"
+	"go/scanner"
 	"go/token"
 	"io"
 	"io/ioutil"
-	"path/filepath"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
 var (
-	exitCode    = 0
+	exitCode      = 0
+	maxComplexity = flag.Int("max-complexity", 0, "max complexity")
 )
 
 func main() {
@@ -112,8 +113,14 @@ func processFile(filename string, in io.Reader,
 		case *ast.FuncDecl:
 			fc := fcomplexity{complexity: 1}
 			fc.process(x)
-			fmt.Printf("%s:\t%s\t%d\n", fset.Position(n.Pos()), x.Name,
-				fc.getComplexity())
+			complexity := fc.getComplexity()
+			if complexity > *maxComplexity {
+				fmt.Printf("%s:\t%s\t%d\n", fset.Position(n.Pos()), x.Name,
+					complexity)
+				if *maxComplexity != 0 {
+					exitCode = 1
+				}
+			}
 		}
 		return true
 	})
