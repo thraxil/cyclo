@@ -2,6 +2,11 @@
 
 Simple cyclomatic complexity analysis for Go programs.
 
+See: http://en.wikipedia.org/wiki/Cyclomatic_complexity
+
+This program doesn't construct the full graph to calculate complexity;
+it just does the simple count of the decision points.
+
 ## Installation
 
    go get github.com/thraxil/cyclo
