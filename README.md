@@ -9,7 +9,7 @@ it just does the simple count of the decision points.
 
 ## Installation
 
-   go get github.com/thraxil/cyclo
+    go get github.com/thraxil/cyclo
 
 (and make sure your `$GOPATH` is in your `$PATH`)
 
