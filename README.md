@@ -18,7 +18,8 @@ it just does the simple count of the decision points.
     usage: cyclo [flags] [path ...]
       -max-complexity=0: max complexity
 
-eg.
+If no flags are specified, it just finds every function definition in
+the specified file(s) and displays its cyclomatic complexity:
 
     $ cyclo cyclo.go
     cyclo.go:22:1:  main    1
