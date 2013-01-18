@@ -34,11 +34,15 @@ eg.
 
 The `--max-complexity` flag will filter the results so that only
 functions with higher complexity are reported. It will also set the
-error-code to a non-zero value. This makes it suitable for use in a
-git commit hook, for example. 
+error-code to a non-zero value if any functions trip it. This makes it
+suitable for use in a git commit hook, for example.
 
     $ cyclo --max-complexity=10 cyclo.go
     cyclo.go:89:1:  processFile     11
+
+The skeleton of the code was ripped off from `go fmt` (steal from the
+best), so it should behave very similarly as far as how it globs
+filenames, traverses directories, and so on.
 
 ## Bugs
 
@@ -47,10 +51,31 @@ aren't the last statement in the function, so functions with an
 explicit `return` at the end currently return 1 higher than they
 should.
 
-I also have not really thought deeply yet about how `go` or `defer`
+## Notes
+
+I have not really thought deeply yet about how `go` or `defer`
 statements should be counted towards complexity. Anyone with good
 ideas, let me know.
 
+For now, I've made function literals count as a decision point towards
+complexity. I'm not sure if that's right. Eg,
+
+    myMap(mySlice, func (v int) {
+        // do something with v
+    })
+
+My thinking is that often when you are using a function literal, it's
+for that type of situation. Ie, "call this on some value later zero or
+more times" and should be equivalent to a conditional or loop from a
+complexity standpoint. Again, I'm open to arguments against this line
+of reasoning.
+
+The Python tool that inspired this has the ability to generate a graph
+of the complexity map in dot format. That's cool, but I have never
+found it useful for anything other than novelty, so I probably won't
+bother implementing a similar feature here. If someone else is
+interested in that, I'm happy to take a patch though.
+
 ## License
 
-BSD. 
+BSD.

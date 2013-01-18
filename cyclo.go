@@ -76,7 +76,11 @@ func (f *fcomplexity) process(x ast.Node) {
 			f.complexity++
 		case *ast.SwitchStmt:
 			f.complexity++
+		case *ast.FuncLit:
+			f.complexity++
 		case *ast.ForStmt:
+			f.complexity++
+		case *ast.RangeStmt:
 			f.complexity++
 		case *ast.IfStmt:
 			f.complexity++
