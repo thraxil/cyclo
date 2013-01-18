@@ -88,6 +88,31 @@ func (f *fcomplexity) process(x ast.Node) {
 	})
 }
 
+type complexityResult struct {
+	Position token.Position
+	FunctionName *ast.Ident
+	Complexity int
+}
+
+func fileComplexity (f ast.Node, fset *token.FileSet) []complexityResult {
+	results := []complexityResult{}
+	ast.Inspect(f, func(n ast.Node) bool {
+		switch x := n.(type) {
+		case *ast.FuncDecl:
+			fc := fcomplexity{complexity: 1}
+			fc.process(x)
+			complexity := fc.getComplexity()
+			results = append(results, complexityResult{
+				Position: fset.Position(n.Pos()),
+				FunctionName: x.Name,
+				Complexity: complexity,
+			})
+		}
+		return true
+	})
+	return results
+}
+
 func processFile(filename string, in io.Reader,
 	out io.Writer, stdin bool) error {
 	if in == nil {
@@ -110,22 +135,15 @@ func processFile(filename string, in io.Reader,
 		panic(err)
 	}
 
-	ast.Inspect(f, func(n ast.Node) bool {
-		switch x := n.(type) {
-		case *ast.FuncDecl:
-			fc := fcomplexity{complexity: 1}
-			fc.process(x)
-			complexity := fc.getComplexity()
-			if complexity > *maxComplexity {
-				fmt.Printf("%s:\t%s\t%d\n", fset.Position(n.Pos()), x.Name,
-					complexity)
-				if *maxComplexity != 0 {
-					exitCode = 1
-				}
+	results := fileComplexity(f, fset)
+	for _, r := range results {
+		if r.Complexity > *maxComplexity {
+			fmt.Printf("%s:\t%s\t%d\n", r.Position, r.FunctionName, r.Complexity)
+			if *maxComplexity != 0 {
+				exitCode = 1
 			}
 		}
-		return true
-	})
+	}
 	return err
 }
 

@@ -32,6 +32,11 @@ eg.
     cyclo.go:144:1: report  1
     cyclo.go:149:1: isGoFile        2
 
+The `--max-complexity` flag will filter the results so that only
+functions with higher complexity are reported. It will also set the
+error-code to a non-zero value. This makes it suitable for use in a
+git commit hook, for example. 
+
     $ cyclo --max-complexity=10 cyclo.go
     cyclo.go:89:1:  processFile     11
 
