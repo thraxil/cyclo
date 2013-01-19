@@ -1,5 +1,7 @@
 # cyclo
 
+[![Build Status](https://travis-ci.org/thraxil/cyclo.png)](https://travis-ci.org/thraxil/cyclo)
+
 Simple cyclomatic complexity analysis for Go programs.
 
 See: http://en.wikipedia.org/wiki/Cyclomatic_complexity
