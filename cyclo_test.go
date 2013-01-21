@@ -20,6 +20,8 @@ func TestProcessFile(t *testing.T) {
 		{"test_cases/2.go", "b", 2},
 		{"test_cases/3.go", "a", 2},
 		{"test_cases/4.go", "a", 3},
+		{"test_cases/5.go", "a", 2},
+		{"test_cases/6.go", "a", 3},
 	}
 	for _, tc := range testCases {
 		fset := token.NewFileSet()
