@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/thraxil/cyclo.png)](https://travis-ci.org/thraxil/cyclo)
 
+[![Fund me on Gittip](https://www.gittip.com/assets/7.0.8/logo.png)](https://www.gittip.com/thraxil/)
+
 Simple cyclomatic complexity analysis for Go programs.
 
 See: http://en.wikipedia.org/wiki/Cyclomatic_complexity
