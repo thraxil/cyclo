@@ -17,6 +17,14 @@ it just does the simple count of the decision points.
 
 (and make sure your `$GOPATH` is in your `$PATH`)
 
+## Nix installation
+
+If you use nix, you can just run
+
+    nix shell github:thraxil/cyclo
+
+Or add it as an input to your own package/flake.
+
 ## Usage
 
     usage: cyclo [flags] [path ...]
