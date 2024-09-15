@@ -1,6 +1,6 @@
 // Use of this source code is governed by a BSD-style license
 
-package main
+package main // import "github.com/thraxil/cyclo"
 
 import (
 	"flag"
@@ -93,12 +93,12 @@ func (f *fcomplexity) process(x ast.Node) {
 }
 
 type complexityResult struct {
-	Position token.Position
+	Position     token.Position
 	FunctionName *ast.Ident
-	Complexity int
+	Complexity   int
 }
 
-func fileComplexity (f ast.Node, fset *token.FileSet) []complexityResult {
+func fileComplexity(f ast.Node, fset *token.FileSet) []complexityResult {
 	results := []complexityResult{}
 	ast.Inspect(f, func(n ast.Node) bool {
 		switch x := n.(type) {
@@ -107,9 +107,9 @@ func fileComplexity (f ast.Node, fset *token.FileSet) []complexityResult {
 			fc.process(x)
 			complexity := fc.getComplexity()
 			results = append(results, complexityResult{
-				Position: fset.Position(n.Pos()),
+				Position:     fset.Position(n.Pos()),
 				FunctionName: x.Name,
-				Complexity: complexity,
+				Complexity:   complexity,
 			})
 		}
 		return true

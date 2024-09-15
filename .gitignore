@@ -1,1 +1,4 @@
+/gomod2nix-template
 cyclo
+.direnv
+result
